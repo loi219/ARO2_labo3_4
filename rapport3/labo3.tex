@@ -135,9 +135,34 @@ Voici les valeurs présentes dans chaque registre au fil des instructions:
 \subsection{Etape 2}
 L'objectif de cette étape était de réaliser un circuit permettant de traiter les informations mentionnées dans l'étape 1.
 Un bus d'instruction donne les informations nécessaires au fonctionnement du bloc EXECUTE (numéros de registres, type d'opérations à faire, opérandes à utiliser). Le format de ces information est sur 23 bits et se présente comme suit: \medskip \\
-
-\subsubsection{[0-2] = sel\_op\_shift}
-
+\begin{itemize}
+\item{[0-2] = sel\_op\_shift}
+    \subitem 000: Bypass du bloc
+    \subitem 001: Operand 1 shift arithmétique à droite avec Operand 2
+    \subitem 010: Operand 1 shift logique à gauche avec Operand 2
+    \subitem 011: Operand 1 shift logique à droite avec Operand 2
+    \subitem 100: Operand 1 shift rotatif à droite avec Operand 2
+\item{[3-6] = sel\_op\_ali}
+    \subitem 0000: Bypass du bloc (Operand 1 en sortie)
+    \subitem 0001: Operand 1 + Operand 2
+    \subitem 0010: Operand 1 - Operand 2
+    \subitem 0011: Operand 1 AND Operand 2
+    \subitem 0100: Operand 1 OR Operand 2
+    \subitem 0101: Operand 1 XOR Operand 2
+    \subitem 0110: NOT Operand 1
+    \subitem 0111: Operand 1 AND (NOT Operand 2)
+    \subitem 1000: Operand 1 * Operand 2
+\item{[7-8] = sel\_operand\_2}
+    \subitem 00: reg\_data\_out\_m
+    \subitem 01: immediate3
+    \subitem 10: not used
+    \subitem 11: immediate8
+\item{[9-10] = sel\_operand\_1}
+    \subitem 00: reg\_data\_out\_n
+    \subitem 01: 0x0000
+    \subitem 10: Branch with link
+    \subitem 11: not used
+\end{itemize}
 \subsection{Chronogramme}
 
 \subsection{Etape 3}
