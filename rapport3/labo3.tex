@@ -80,7 +80,7 @@ Nous avons décidé de séparer les blocs afin de permettre une meilleure modula
     \item     EXECUTE
 \end{itemize}
 \subsection{Etape 1}
-\subsubsection{DECODE}
+\subsubsection{Instructions fournies}
 Un programme assembleur a été fourni pour cette étape, et l'objectif était d'en relever un chronogramme dont les signaux étaient spécifiés dans la donnée.
 Le programme assembleur est le suivant:\medskip \\ 
 \begin{center}
@@ -120,16 +120,25 @@ Voici les valeurs présentes dans chaque registre au fil des instructions:
     \item r2 $\leftarrow$ 0x0003
     \item r3 $\leftarrow$ 0x000a
     \item r5 $\leftarrow$ 0x000d
-    \item r3 $\leftarrow$ 0x ?
+    \item r3 $\leftarrow$ 0x0000
     \item r1 $\leftarrow$ 0x0d00
-    \item r0 $\leftarrow$ 0 ?
+    \item r0 $\leftarrow$ 0xf300 (à vérifier)
 \end{enumerate}
-\subsubsection{Chronogramme}
+\subsection{Chronogramme}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/CHRONO_ETAPE1.png}
+    \captionof{figure}{Chronogramme}
+    \label{fig:Chronogramme}
+\end{figure}
 
 \subsection{Etape 2}
 L'objectif de cette étape était de réaliser un circuit permettant de traiter les informations mentionnées dans l'étape 1.
 Un bus d'instruction donne les informations nécessaires au fonctionnement du bloc EXECUTE (numéros de registres, type d'opérations à faire, opérandes à utiliser). Le format de ces information est sur 23 bits et se présente comme suit: \medskip \\
-\subsubsection{Chronogramme}
+
+\subsubsection{[0-2] = sel\_op\_shift}
+
+\subsection{Chronogramme}
 
 \subsection{Etape 3}
 L'objectif de cette partie était de modifier le circuit afin qu'il puisse traiter des informations supplémentaires précisées dans la données, à savoir:
