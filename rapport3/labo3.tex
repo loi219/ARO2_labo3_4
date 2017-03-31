@@ -80,6 +80,7 @@ Nous avons décidé de séparer les blocs afin de permettre une meilleure modula
     \item     EXECUTE
 \end{itemize}
 \subsection{Etape 1}
+L'objectif de cette première étape était de relever un chronogramme, d'étudier la façon dont étaient générées les signaux dans le bloc DECODE, et d'expliquer les valeurs relevées dans les deux instructions ADD.
 \subsubsection{Instructions fournies}
 Un programme assembleur a été fourni pour cette étape, et l'objectif était d'en relever un chronogramme dont les signaux étaient spécifiés dans la donnée.
 Le programme assembleur est le suivant:\medskip \\ 
@@ -124,10 +125,10 @@ Voici les valeurs présentes dans chaque registre au fil des instructions:
     \item r1 $\leftarrow$ 0x0d00
     \item r0 $\leftarrow$ 0xf300 (à vérifier)
 \end{enumerate}
-\subsection{Chronogramme}
+\subsubsection{Chronogramme}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.8\textwidth]{src/CHRONO_ETAPE1.png}
+    \includegraphics[width=1\textwidth]{src/CHRONO_ETAPE1.png}
     \captionof{figure}{Chronogramme}
     \label{fig:Chronogramme}
 \end{figure}
@@ -163,10 +164,10 @@ Un bus d'instruction donne les informations nécessaires au fonctionnement du bl
     \subitem 10: Branch with link
     \subitem 11: not used
 \end{itemize}
-\subsection{Chronogramme}
+\subsubsection{Chronogramme}
 
 \subsection{Etape 3}
-L'objectif de cette partie était de modifier le circuit afin qu'il puisse traiter des informations supplémentaires précisées dans la données, à savoir:
+L'objectif de cette partie était de modifier le circuit afin qu'il puisse traiter des informations supplémentaires précisées dans la donnée, à savoir:
 \medskip
 \begin{itemize}
     \item Shift logique à gauche, avec valeur immédiate
