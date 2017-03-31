@@ -27,13 +27,13 @@ THUMB    = -mthumb
 
 # Compilateur ARM Assembleur
 #CAS = arm-elf-as
-CAS = arm-linux-gnueabihf-as
+CAS = arm-linux-gnu-as
 
 # Instruction pour copie de l'objet en .hex et en .lss
 #OBJCOPY = arm-elf-objcopy
 #OBJDUMP = arm-elf-objdump
-OBJCOPY = arm-linux-gnueabihf-objcopy
-OBJDUMP = arm-linux-gnueabihf-objdump
+OBJCOPY = arm-linux-gnu-objcopy
+OBJDUMP = arm-linux-gnu-objdump
 
 # Commande de création pour le fichier .raw
 HEXDUMP_RAW = hexdump -v -e '8/2 "%04x " "\n"' 
