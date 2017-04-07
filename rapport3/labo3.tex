@@ -164,11 +164,61 @@ Un bus d'instruction donne les informations nécessaires au fonctionnement du bl
     \subitem 10: Branch with link
     \subitem 11: not used
 \end{itemize}
+
+\subsubsection{Liste des blocs Logisim réalisés pour cette étape:}
+\begin{itemize}
+    \item EXECUTE: bloc principal
+    \item COMP\_INST: intruction de comparaison
+    \item MOV\_INS: intruction MOV
+    \item PAS\_UN\_ALU: en tout cas pas un alu
+    \item LSL\_INST: shift logique à gauche
+    \item ADD\_INST: addition
+    \item SUB\_INST: soustraction
+\end{itemize}
+\subsubsection{COMP\_INST} \label{comp_inst}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/COMP_INST.png}
+    \captionof{figure}{Comparateur logique}
+    \label{fig:comp_inst_pic}
+\end{figure}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     op: instruction à effectuer
+    \item     Op1: opérande 1
+    \item     Op2: opérande 2
+\end{itemize}
+
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item     COMP\_OUT: résultat de la comparaison
+\end{itemize}
+\medskip
+Ce bloc permet d'effectuer les comparaisons logiques AND, OR, XOR, NOT(op1) et AND NOT(op2). Seuls les bits [2..0] de \textbf{sel\_op} sont pertinents pour déterminer quelle opération il faut effectuer, puisque le bit 3 est toujours à 0. Un multiplexer permet de renvoyer la comparaison définie par l'op. Deux multiplexer permettent de choisir le NOT de chaque opérande lorsqu'il y a l'instruction NOT et l'instruction AND NOT, et ainsi réutiliser le porte logique AND ou prendre directement la sortie du multiplexer.
+
+\subsubsection{MOV\_INST} \label{mov_inst}
+
+\subsubsection{PAS\_UN\_ALU} \label{pas_alu}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     sel\_op\_alu: instruction à effectuer
+    \item     Op1: opérande 1
+    \item     Op2: opérande 2
+\end{itemize}
+
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item     COMP\_OUT: résultat de la comparaison
+    \item     ADD\_OUT: résultat de l'addition
+\end{itemize}
+\medskip
+
 \subsubsection{Chronogramme}
 
 \subsection{Etape 3}
 L'objectif de cette partie était de modifier le circuit afin qu'il puisse traiter des informations supplémentaires précisées dans la donnée, à savoir:
 \medskip
+
 \begin{itemize}
     \item Shift logique à gauche, avec valeur immédiate
     \item Shift logique à gauche, avec valeur en registre
