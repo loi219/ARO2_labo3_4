@@ -18,7 +18,7 @@ Disassembly of section .text:
    0:	2003      	movs	r0, #3
    2:	1c02      	adds	r2, r0, #0
    4:	1dd3      	adds	r3, r2, #7
-   6:	181d      	adds	r5, r3, r0
-   8:	402b      	ands	r3, r5
-   a:	00a9      	lsls	r1, r5, #2
+   6:	181c      	adds	r4, r3, r0
+   8:	4023      	ands	r3, r4
+   a:	00a1      	lsls	r1, r4, #2
    c:	1a58      	subs	r0, r3, r1
