@@ -167,13 +167,13 @@ Un bus d'instruction donne les informations nécessaires au fonctionnement du bl
 
 \subsubsection{Liste des blocs Logisim réalisés pour cette étape:}
 \begin{itemize}
-    \item EXECUTE: bloc principal
     \item COMP\_INST: intruction de comparaison
-    \item MOV\_INS: intruction MOV
-    \item PAS\_UN\_ALU: en tout cas pas un alu
     \item LSL\_INST: shift logique à gauche
     \item ADD\_INST: addition
     \item SUB\_INST: soustraction
+    \item ALU: Arithmetic Logic Unit (unité arithmétique et logique)
+    \item EXECUTE: bloc principal
+
 \end{itemize}
 \subsubsection{COMP\_INST} \label{comp_inst}
 \begin{figure}[H]
@@ -187,6 +187,7 @@ Un bus d'instruction donne les informations nécessaires au fonctionnement du bl
     \item     op: instruction à effectuer
     \item     Op1: opérande 1
     \item     Op2: opérande 2
+    \item     ACTIV: est à 1 lorsqu'il faut effectuer l'opération
 \end{itemize}
 
 \paragraph{Définition des sorties:}
@@ -194,11 +195,80 @@ Un bus d'instruction donne les informations nécessaires au fonctionnement du bl
     \item     COMP\_OUT: résultat de la comparaison
 \end{itemize}
 \medskip
-Ce bloc permet d'effectuer les comparaisons logiques AND, OR, XOR, NOT(op1) et AND NOT(op2). Seuls les bits [2..0] de \textbf{sel\_op} sont pertinents pour déterminer quelle opération il faut effectuer, puisque le bit 3 est toujours à 0. Un multiplexer permet de renvoyer la comparaison définie par l'op. Deux multiplexer permettent de choisir le NOT de chaque opérande lorsqu'il y a l'instruction NOT et l'instruction AND NOT, et ainsi réutiliser le porte logique AND ou prendre directement la sortie du multiplexer.
+Ce bloc permet d'effectuer les comparaisons logiques AND, OR, XOR, NOT(op1) et AND NOT(op2). Seuls les bits [2..0] de \textbf{sel\_op} sont pertinents pour déterminer quelle opération il faut effectuer, puisque le bit 3 est toujours à 0. Un multiplexer permet de renvoyer la comparaison définie par l'op. Deux multiplexer permettent de choisir le NOT de chaque opérande lorsqu'il y a l'instruction NOT et l'instruction AND NOT, et ainsi réutiliser le porte logique AND ou prendre directement la sortie du multiplexer. Tant qu'\textbf{ACTIV} n'est pas à 1, la sortie sera à 0x0000.
 
-\subsubsection{MOV\_INST} \label{mov_inst}
+\subsubsection{LSL\_INST}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/LSL_INST.png}
+    \captionof{figure}{Shift logique à gauche}
+    \label{fig:lsl_inst_pic}
+\end{figure}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     Op1: opérande
+    \item     sel\_shift: active le shift
+    \item     sel\_op\_shift: indique le type de shift
+\end{itemize}
 
-\subsubsection{PAS\_UN\_ALU} \label{pas_alu}
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item     LSL\_OUT: résultat du shift logique
+\end{itemize}
+\medskip
+Un shift logique va être effectué dans ce bloc, selon le \textbf{sel\_op\_shift} (voir le détail du bus d'instruction présenté au début de cette étape). Un multiplexer placé en fin du circuit permet de choisir le shift à partir de cette entrée. Les bits [7-5] du MUX sont inutilisés, raison pour laquelle une constante à 0x0000 y a été mise en entrée. L'\textbf{sel\_shift} va permettre de déterminer s'il faut effectivement effectuer un shift.
+
+\subsubsection{ADD\_INST}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/ADD_INST.png}
+    \captionof{figure}{Addition}
+    \label{fig:add_inst_pic}
+\end{figure}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     Op1: opérande 1
+    \item     Op2: opérande 2
+    \item     ACTIV: est à 1 lorsqu'il faut effectuer l'opération
+\end{itemize}
+
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item     ADD\_OUT: résultat de l'addition
+\end{itemize}
+\medskip
+Une simple addition est effecutée entre les opérandes. Tant qu'\textbf{ACTIV} n'est pas à 1, la sortie sera à 0x0000.
+
+
+\subsubsection{SUB\_INST}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/SUB_INST.png}
+    \captionof{figure}{Soustraction}
+    \label{fig:sub_inst_pic}
+\end{figure}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     op: instruction à effectuer
+    \item     Op1: opérande 1
+    \item     Op2: opérande 2
+    \item     ACTIV: est à 1 lorsqu'il faut effectuer l'opération
+\end{itemize}
+
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item     SUB\_OUT: résultat de la soustraction
+\end{itemize}
+\medskip
+Une simple soustraction est effectuée entre les opérandes. Tant qu'\textbf{ACTIV} n'est pas à 1, la sortie sera à 0x0000.
+
+\subsubsection{ALU} \label{alu}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/ALU.png}
+    \captionof{figure}{ALU}
+    \label{fig:alu_pic}
+\end{figure}
 \paragraph{Définition des entrées:}
 \begin{itemize}
     \item     sel\_op\_alu: instruction à effectuer
@@ -208,8 +278,30 @@ Ce bloc permet d'effectuer les comparaisons logiques AND, OR, XOR, NOT(op1) et A
 
 \paragraph{Définition des sorties:}
 \begin{itemize}
-    \item     COMP\_OUT: résultat de la comparaison
-    \item     ADD\_OUT: résultat de l'addition
+    \item     OUT\_ALU: résultat de l'opération effectuée dans l'ALU
+\end{itemize}
+\medskip
+Les deux opérandes sont reliées à chaque bloc effectuant les instructions, afin de leur tranmettre les données nécessaires. L'entrée \textbf{sel\_op\_alu} correspond aux bits [3-6] du bus d'instructions, et va, selon sa valeur, permettre de déterminer quelle est l'instruction qui doit être effectuée. Cette valeur (0x0001 pour ADD, 0x0010 pour SUB et 0x0011 pour AND) va être testée grâce à des portes NAND reliées aux entrées \textbf{ACTIV} des blocs qui leur correspondent. Le bit 3 pour l'intruction AND n'a pas été utilisé lors de la détection de cette instruction, car l'instruction pour AND est 0x0011, et l'instruction pour NAND est 0x0111, et il est plus simple de réaliser le AND et le NAND dans un même bloc de comparaison, d'où ce choix.
+En entrée \textbf{op} de \textbf{COMP\_INST} sont sélectionnés les 3 bits de poids faible de \textbf{sel\_op\_alu}, car le bit 3 n'est pas pertinent pour la détermination des opérations AND, OR et XOR effectuées dans ce bloc (il est toujours à 0).
+En sortie de ces trois blocs, se trouvent 3 multiplexers qui vont permettre de choisir la bonne sortie de l'ALU. Le premier MUX (à gauche) prend va renvoyer le résultat d'un ADD ou d'un SUB. À supposer qu'aucune de ces opérations n'aient été effectuées, un second MUX (au centre) va choisir entre la comparaison ou un éventuel ADD/SUB. Un dernier MUX (à droite), va choisir entre une éventuelle opération effectuée, ou, sinon, va renvoyer l'opérande 1 (bypass du bloc). Ce MUX est relié à un bloc de comparaison qui renvoie 1 si le \textbf{sel\_op\_alu} est à 0.
+\subsubsection{EXECUTE} \label{execute}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/EXECUTE.png}
+    \captionof{figure}{EXECUTE}
+    \label{fig:execute_pic}
+\end{figure}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     reg\_data\_out\_n: données du registre source 1
+    \item     reg\_data\_out\_m: données du registre source 2
+    \item     imme3, imme5, imme8: valeurs immédiates
+    \item     execute\_control\_bus: bus d'instruction
+\end{itemize}
+
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item     OUT\_EXECUTE: résultat des opération effectuées dans EXECUTE et dans l'ALU
 \end{itemize}
 \medskip
 
