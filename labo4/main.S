@@ -1,18 +1,20 @@
 @ ARO2 - Labo4
-MOV r0, #0x0012
-MOV r2, #0x0034
-LSL r1, r0, #8
-ORR r1,r2
 
-MOV r0,#0x0000
-STRH r1, [r0,#0x4*2]
 
-MOV r0, #0x0056
-MOV r2, #0x0078
-LSL r1, r0, #8
-ORR r1,r2
+@--Copie/ stocke--
+MOV r0, #0x4
 
-MOV r0,#0x0004
-STRH r1, [r0,#0x4*2]
+@copie la valeur de M[0x4+0x4] dans r1
+LDRB r1, [r0,#0x4]
 
-LDRH r2, [r0,#0x6*2]
+MOV r0,#0x6
+@copie la valeur de M[0x6+0x6] dans r2
+LDRB r2, [r0,#0x6]
+
+MOV r0, #0x14
+@stocke la valeur du registre r1 dans M[0x14]
+STRB r1, [r0,#0x14]
+
+MOV r0,#0x16
+@stocke la valeur du registre r1 dans M[0x16]
+STRB r2, [r0,#0x16]
