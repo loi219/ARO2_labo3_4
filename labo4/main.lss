@@ -3,23 +3,69 @@ main.o:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000010  00000000  00000000  00000034  2**1
+  0 .text         00000066  00000000  00000000  00000034  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000000  00000000  00000000  00000044  2**0
+  1 .data         00000000  00000000  00000000  0000009a  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000000  00000000  00000000  00000044  2**0
+  2 .bss          00000000  00000000  00000000  0000009a  2**0
                   ALLOC
-  3 .ARM.attributes 00000014  00000000  00000000  00000044  2**0
+  3 .ARM.attributes 00000014  00000000  00000000  0000009a  2**0
                   CONTENTS, READONLY
 
 Disassembly of section .text:
 
-00000000 <.text>:
-   0:	2004      	movs	r0, #4
-   2:	7901      	ldrb	r1, [r0, #4]
-   4:	2006      	movs	r0, #6
-   6:	7982      	ldrb	r2, [r0, #6]
-   8:	2014      	movs	r0, #20
-   a:	7501      	strb	r1, [r0, #20]
-   c:	2016      	movs	r0, #22
-   e:	7582      	strb	r2, [r0, #22]
+00000000 <FONCTION_A-0x20>:
+   0:	2126      	movs	r1, #38	; 0x26
+   2:	f000 f80d 	bl	20 <FONCTION_A>
+   6:	1cd4      	adds	r4, r2, #3
+   8:	0000      	movs	r0, r0
+   a:	0000      	movs	r0, r0
+   c:	0000      	movs	r0, r0
+   e:	0000      	movs	r0, r0
+  10:	0000      	movs	r0, r0
+  12:	0000      	movs	r0, r0
+  14:	0000      	movs	r0, r0
+  16:	0000      	movs	r0, r0
+  18:	0000      	movs	r0, r0
+  1a:	0000      	movs	r0, r0
+  1c:	0000      	movs	r0, r0
+  1e:	0000      	movs	r0, r0
+
+00000020 <FONCTION_A>:
+  20:	f000 f80e 	bl	40 <FONCTION_B>
+  24:	22ff      	movs	r2, #255	; 0xff
+  26:	400a      	ands	r2, r1
+  28:	1c37      	adds	r7, r6, #0
+  2a:	0000      	movs	r0, r0
+  2c:	0000      	movs	r0, r0
+  2e:	0000      	movs	r0, r0
+  30:	0000      	movs	r0, r0
+  32:	0000      	movs	r0, r0
+  34:	0000      	movs	r0, r0
+  36:	0000      	movs	r0, r0
+  38:	0000      	movs	r0, r0
+  3a:	0000      	movs	r0, r0
+  3c:	0000      	movs	r0, r0
+  3e:	0000      	movs	r0, r0
+
+00000040 <FONCTION_B>:
+  40:	010a      	lsls	r2, r1, #4
+  42:	f000 f80d 	bl	60 <FONCTION_C>
+  46:	1c37      	adds	r7, r6, #0
+  48:	0000      	movs	r0, r0
+  4a:	0000      	movs	r0, r0
+  4c:	0000      	movs	r0, r0
+  4e:	0000      	movs	r0, r0
+  50:	0000      	movs	r0, r0
+  52:	0000      	movs	r0, r0
+  54:	0000      	movs	r0, r0
+  56:	0000      	movs	r0, r0
+  58:	0000      	movs	r0, r0
+  5a:	0000      	movs	r0, r0
+  5c:	0000      	movs	r0, r0
+  5e:	0000      	movs	r0, r0
+
+00000060 <FONCTION_C>:
+  60:	2101      	movs	r1, #1
+  62:	430a      	orrs	r2, r1
+  64:	1c37      	adds	r7, r6, #0

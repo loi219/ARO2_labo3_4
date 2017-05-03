@@ -16,7 +16,7 @@
 mov r0, #3
 mov r2, r0
 add r3, r2, #7
-add r4, r3, r0
-and r3, r4
-lsl r1, r4, #2
+add r5, r3, r0
+and r3, r5
+lsl r1, r5, #2
 sub r0, r3, r1
