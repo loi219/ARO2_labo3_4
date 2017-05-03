@@ -5,5 +5,5 @@ v2.0 raw
  #Ce fichier peut etre importe
  #directement dans la RAM d'instruction du processeur
  #PRODIS1 dans logisim.
-2012 2234 0201 4311 2004 8181 8982 7983
-2014 7583                              
+2012 2234 0201 4311 2000 8101 2056 2278
+0201 4311 2004 8101 8982               
