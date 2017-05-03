@@ -1,5 +1,7 @@
 @ ARO2 - Labo4
+MOV r5, #0xFE
 MOV r1,#0x26
+
 BL FONCTION_A
 ADD  r4,r2,#3
 
@@ -20,6 +22,7 @@ MOV r7,r6 @ return
 FONCTION_C:
 MOV r1,#1
 ORR r2, r1
+STR r7, [SP,#0xFF*4]
 MOV r7,r6 @ return
 
 
