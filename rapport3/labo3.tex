@@ -21,7 +21,7 @@
 \usepackage{tabularx}
 \usepackage{multirow}% http://ctan.org/pkg/multirow
 \usepackage{tikz}
-\usepackage[top=15mm,bottom=20mm,right=50mm,left=50mm]{geometry} 
+\usepackage[top=25mm,bottom=25mm,right=25mm,left=25mm]{geometry} 
 \usepackage[export]{adjustbox}
 
 
@@ -87,7 +87,7 @@ Le programme assembleur est le suivant:\medskip \\
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
     \hline
-    MOV  & Rd & Rn   & Rm  \\
+    INST  & Rd & Rn   & Rm  \\
     \hline
     MOV  & r0 & \#3  &     \\
     \hline
@@ -132,7 +132,14 @@ Voici les valeurs présentes dans chaque registre au fil des instructions:
     \captionof{figure}{Chronogramme}
     \label{fig:Chronogramme}
 \end{figure}
-
+\paragraph{Signaux dans l'ordre:}
+\begin{itemize}
+    \item     adr\_reg\_d/n/m: adresse des registres (bloc DECODE)
+    \item     reg\_data\_out\_m/n: données des registres source (bloc BANK\_REGISTER)
+    \item     sel\_op\_alu: operation à effectuer dans l'ALU (bloc DECODE)
+    \item     sel\_op\_1/2: placement des opérandes (bloc DECODE)
+    \item     imm3/5/8: valeurs immédiates (bloc DECODE)
+\end{itemize}
 \subsection{Etape 2}
 L'objectif de cette étape était de réaliser un circuit permettant de traiter les informations mentionnées dans l'étape 1.
 Un bus d'instruction donne les informations nécessaires au fonctionnement du bloc EXECUTE (numéros de registres, type d'opérations à faire, opérandes à utiliser). Le format de ces information est sur 23 bits et se présente comme suit: \medskip \\
@@ -163,6 +170,9 @@ Un bus d'instruction donne les informations nécessaires au fonctionnement du bl
     \subitem 01: 0x0000
     \subitem 10: Branch with link
     \subitem 11: not used
+\item{[20] = sel\_shift}
+    \subitem 0 : immediate5 
+    \subitem 1 : reg\_data\_out\_m 
 \end{itemize}
 
 \subsubsection{Liste des blocs Logisim réalisés pour cette étape:}
@@ -207,7 +217,7 @@ Ce bloc permet d'effectuer les comparaisons logiques AND, OR, XOR, NOT(op1) et A
 \paragraph{Définition des entrées:}
 \begin{itemize}
     \item     Op1: opérande
-    \item     sel\_shift: active le shift
+    \item     sel\_shift: nombre de bits à décaler
     \item     sel\_op\_shift: indique le type de shift
 \end{itemize}
 
@@ -216,7 +226,7 @@ Ce bloc permet d'effectuer les comparaisons logiques AND, OR, XOR, NOT(op1) et A
     \item     LSL\_OUT: résultat du shift logique
 \end{itemize}
 \medskip
-Un shift logique va être effectué dans ce bloc, selon le \textbf{sel\_op\_shift} (voir le détail du bus d'instruction présenté au début de cette étape). Un multiplexer placé en fin du circuit permet de choisir le shift à partir de cette entrée. Les bits [7-5] du MUX sont inutilisés, raison pour laquelle une constante à 0x0000 y a été mise en entrée. L'\textbf{sel\_shift} va permettre de déterminer s'il faut effectivement effectuer un shift.
+Un shift logique va être effectué dans ce bloc, selon le \textbf{sel\_op\_shift} (voir le détail du bus d'instruction présenté au début de cette étape). Un multiplexer placé en fin du circuit permet de choisir le shift à partir de cette entrée. Les bits [7-5] du MUX sont inutilisés, raison pour laquelle une constante à 0x0000 y a été mise en entrée. L'\textbf{sel\_shift} va permettre de déterminer de combien de bits le décalage doit être fait.
 
 \subsubsection{ADD\_INST}
 \begin{figure}[H]
@@ -304,9 +314,11 @@ En sortie de ces trois blocs, se trouvent 3 multiplexers qui vont permettre de c
     \item     OUT\_EXECUTE: résultat des opération effectuées dans EXECUTE et dans l'ALU
 \end{itemize}
 \medskip
-
-\subsubsection{Chronogramme}
-
+La partie EXECUTE va prendre en entrée toutes le bus d'instruction qui va permettre de déterminer les différentes instructions à effecuter. Il est séparé comme présenté au début d'étape 2.
+La structure de ce circuit sera décrite à partir de ses entrées, et selon les difféntes séparations de bits du bus de contrôle, dont les valeurs vont déterminer les entrées à utiliser.
+\textbf{reg\_data\_n} va être utilisée seulement lorsque les bits [10-9] sont à 00. Les autres valeurs en sortie du MUX sont toutes à 0, d'où la constante. La sortie de ce bus correspond à l'opérande 1 à mettre en entrée du shift logique (qui va donc subir le shift).
+Les entrées \textbf{reg\_data\_m}, \textbf{imm3} et \textbf{imm8} vont être déterminées par les bits [8-7] du bus d'intructions. Ainsi, ils se retrouvent en entrée d'un même multiplexer. La valeur 10 en bits [8-7] du bus n'est pas utilisée, ainsi, il y a une constante à 0. Comme la sortie de ce MUX correspond à l'opérande 2 (en entrée de l'ALU), un bit selector va permettre d'étendre les valeurs de \textbf{imm3} et \textbf{imm8} sur 16 bits.
+Reste \textbf{imm5}, dans un MUX avec \textbf{reg\_data\_m}. Seuls 4 bits de ces deux entrées sont sélectionnées, car elles déterminent le \textbf{sel\_shift} du shift logique, c'est-à-dire le nombre de bits qu'il faut décaler, qui est sur 4 bits. La valeur du MUX est déterminée par le  bit [20] du bus d'instructions. Restent les bits [2-0] du bus d'instructions, qui sont en entrée  \textbf{shel\_op\_shift} du shift logique, et vont déterminer le type de shift logique à effectuer. La sortie du shift logique correspond à l'opérande 1 de l'ALU. Enfin, les bits [6-3] du bus d'instructions sont en entrée \textbf{sel\_op\_alu} de l'ALU, et permettent de choisir l'opération à effectuer dans l'ALU.
 \subsection{Etape 3}
 L'objectif de cette partie était de modifier le circuit afin qu'il puisse traiter des informations supplémentaires précisées dans la donnée, à savoir:
 \medskip
@@ -325,6 +337,24 @@ L'objectif de cette partie était de modifier le circuit afin qu'il puisse trait
     \item Soustraction avec valeur immédiate
     \item Soustraction avec valeur en registre
 \end{itemize}
+L'étape 3 a été réalisée simultanément avec l'étape 2, puisqu'il d'agissait de permettre au circuit de traiter des informations qui étaient aussi en rapport avec cette étape. Ainsi, il faut se référer à l'étape 2.
+
 \subsubsection{Chronogramme}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{src/CHRONO_FINAL.png}
+    \captionof{figure}{Chronogramme}
+    \label{fig:chrono_final_pic}
+\end{figure}
+\paragraph{Signaux dans l'ordre:}
+\begin{itemize}
+    \item     clk: horloge
+    \item     execute\_control\_bus: bus d'instructions (bloc EXECUTE)
+    \item     imme3, imme5, imme8: valeurs immédiates (bloc EXECUTE)
+    \item     reg\_data\_out\_m/n: données des registres source (bloc EXECUTE)
+    \item     sel\_op\_alu: operation à effectuer dans l'ALU (bloc ALU)
+    \item     OUT\_EXECUTE: valeur en sortie (bloc EXECUTE)
+\end{itemize}
 \section{Conclusion}
+Ce laboratoire nous a permis de comprendre la partie EXECUTE d'un processeur, et de faire le lien avec les deux parties FETCH et DECODE que nous avions vues dans les deux laboratoires précédents.
 \end{document}
