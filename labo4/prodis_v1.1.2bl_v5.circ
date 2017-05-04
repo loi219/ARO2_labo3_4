@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project integrity="ae66e7079dc6b5132b927674536cb88b319025b0" source="2.13.24.t" version="1.0">
+<project integrity="2b77549f2e20c4213501c4a7bdce18516da68789" source="2.13.24.t" version="1.0">
 This file is intended to be loaded by Logisim-evolution (https://github.com/reds-heig/logisim-evolution).
 <lib desc="#Wiring" name="0">
     <tool name="Splitter">
@@ -432,9 +432,10 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="addrWidth" val="15"/>
       <a name="dataWidth" val="16"/>
       <a name="contents">addr/data: 15 16
-25fe 2126 f000 f80c 1cd4 11*0 f000 f80e
-22ff 400a 1c37 11*0 10a f000 f80d 1c37
-12*0 2101 430a 97ff 1c37
+25fe 2126 f000 f80c 1cd4 11*0 9600 3d02
+f000 f80c 22ff 400a 3502 9f00 8*0 9600
+3d02 10a f000 f80b 3502 9f00 9*0 9600
+3d02 2101 430a 3502 9f00
 </a>
     </comp>
     <comp lib="0" loc="(1360,910)" name="Tunnel">
@@ -12331,6 +12332,89 @@ This file is intended to be loaded by Logisim-evolution (https://github.com/reds
       <a name="version" val="2.11.4.t"/>
       <a name="uuid" val="831dd170-7650-474a-a1ad-00406873cfdf"/>
       <a name="integrity" val="671237761a32f9b6ad6ea3a16d2bb63ead0bb557"/>
+    </comp>
+    <comp lib="7" loc="(4,50)" name="Text" trackercomp="true">
+      <a name="text" val="Attention, votre version de Logisim"/>
+      <a name="font" val="SansSerif plain 48"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="7" loc="(4,100)" name="Text" trackercomp="true">
+      <a name="text" val="ne contient pas de tracker. Si vous"/>
+      <a name="font" val="SansSerif plain 48"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="7" loc="(4,150)" name="Text" trackercomp="true">
+      <a name="text" val="enregistrez votre projet, toutes les"/>
+      <a name="font" val="SansSerif plain 48"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="7" loc="(4,200)" name="Text" trackercomp="true">
+      <a name="text" val="informations du tracker seront"/>
+      <a name="font" val="SansSerif plain 48"/>
+      <a name="halign" val="left"/>
+    </comp>
+    <comp lib="7" loc="(4,250)" name="Text" trackercomp="true">
+      <a name="text" val="définitivement effacées."/>
+      <a name="font" val="SansSerif plain 48"/>
+      <a name="halign" val="left"/>
+    </comp>
+  </circuit>
+  <circuit name="DISP_INST">
+    <a name="circuit" val="DISP_INST"/>
+    <a name="clabel" val=""/>
+    <a name="clabelup" val="east"/>
+    <a name="clabelfont" val="SansSerif bold 12"/>
+    <a name="circuitnamedbox" val="true"/>
+    <a name="circuitvhdlpath" val=""/>
+    <wire from="(150,220)" to="(180,220)"/>
+    <wire from="(180,250)" to="(220,250)"/>
+    <wire from="(180,220)" to="(180,250)"/>
+    <wire from="(110,230)" to="(130,230)"/>
+    <wire from="(200,270)" to="(220,270)"/>
+    <comp lib="3" loc="(260,260)" name="Comparator">
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.05.17 15:11:10"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="d07bbd2b-26e5-4b65-9c8b-3e781497951f"/>
+      <a name="integrity" val="e6010e1b2667d7e00b61a41c813f82c636f3f2b0"/>
+    </comp>
+    <comp lib="0" loc="(130,230)" name="Splitter">
+      <a name="fanout" val="3"/>
+      <a name="incoming" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.05.17 15:07:38"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="42d05193-54e2-4524-a466-5939a2f9de7e"/>
+      <a name="integrity" val="42c5dc440631ce6118cf1ea6c2e88353eb4ede96"/>
+      <a name="bit1" val="0"/>
+      <a name="bit2" val="0"/>
+      <a name="bit3" val="1"/>
+      <a name="bit4" val="1"/>
+      <a name="bit5" val="1"/>
+      <a name="bit6" val="1"/>
+      <a name="bit7" val="1"/>
+      <a name="bit8" val="2"/>
+      <a name="bit9" val="2"/>
+      <a name="bit10" val="2"/>
+      <a name="bit11" val="2"/>
+      <a name="bit12" val="2"/>
+      <a name="bit13" val="2"/>
+      <a name="bit14" val="2"/>
+      <a name="bit15" val="2"/>
+    </comp>
+    <comp lib="0" loc="(200,270)" name="Constant">
+      <a name="width" val="8"/>
+      <a name="value" val="0xdf"/>
+    </comp>
+    <comp lib="0" loc="(110,230)" name="Pin">
+      <a name="width" val="16"/>
+      <a name="label" val="inst_data"/>
+      <a name="radix" val="16"/>
+      <a name="owner" val="sven_rouvinez"/>
+      <a name="date" val="04.05.17 15:08:03"/>
+      <a name="version" val="2.13.24.t"/>
+      <a name="uuid" val="9b2f5976-6de7-4eb1-8750-7690a3392fde"/>
+      <a name="integrity" val="49f4e3d8d8d6757411dace7bddbe60b009676caf"/>
     </comp>
     <comp lib="7" loc="(4,50)" name="Text" trackercomp="true">
       <a name="text" val="Attention, votre version de Logisim"/>
