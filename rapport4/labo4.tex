@@ -170,12 +170,13 @@ Le chronogramme ci-dessus illustre le bon fonctionnement du programme assembleur
     \captionof{figure}{Mémoires après écriture}
     \label{fig:mem_exmpl_pic}
 \end{figure}
-
+\pagebreak
 \subsection{Point b}
 Effectuer une copie des deux mots écrits en point aux adresses 0x0014 et 0x0016 en utilisant uniquement les instructions LDRB et STRB.
 \lstinputlisting[caption=main.S,label=et1a]{../labo4/mains/mainEt1b.S}
 
 \section{Étape 2}
+Le programme assembleur fourni ne fonctionne pas, car le stack pointer va toujours pointer vers la valeur de la pile qu'il pointait déjà, ainsi le programme se retrouve dans une boule, malgrès l'incrémentation du PC.
 \lstinputlisting[caption=main.S,label=et1a]{../labo4/mains/mainEt2.S}
 \section{Étape 3}
 Modifier le circuit du processeur selon plusieurs conditions
