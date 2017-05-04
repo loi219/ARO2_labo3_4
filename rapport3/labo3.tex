@@ -184,16 +184,31 @@ Légende des instructions:
     \item \textbf{SUB} Soustraction    
 \end{itemize}
 \medskip
-Voici les valeurs présentes dans chaque registre au fil des instructions:
-\begin{enumerate}
-    \item r0 $\leftarrow$ 0x0003
-    \item r2 $\leftarrow$ 0x0003
-    \item r3 $\leftarrow$ 0x000a
-    \item r5 $\leftarrow$ 0x000d
-    \item r3 $\leftarrow$ 0x000a
-    \item r1 $\leftarrow$ 0x0a00
-    \item r0 $\leftarrow$ 0xf60a
-\end{enumerate}
+Ci-dessous, un comparatif des valeurs qui devraient être obtenues dans le circuit, et celle qui apparaîssent réellement dans le chronogramme:
+\medskip
+\\
+\begin{center}
+    \begin{tabular}{|c|c|c|}
+        \hline
+            Registre & Valeur calculée & Valeur chrono\\
+            \hline
+            r0   & 0x0003 & 0x0003 \\
+            \hline
+            r2   & 0x0003 & 0x0002\\
+            \hline
+            r3   & 0x000a & 0x00d3\\
+            \hline
+            r5   & 0x000d & 0x001d \\
+            \hline
+            r3   & 0x000a & 0x002b \\
+            \hline
+            r1   & 0x002c & 0x00a9 \\
+            \hline
+            r0   & 0xffde & 0x0058 \\
+            \hline
+    \end{tabular}
+\end{center}
+
 \subsubsection{Chronogramme}
 \begin{figure}[H]
     \centering
@@ -209,6 +224,8 @@ Voici les valeurs présentes dans chaque registre au fil des instructions:
     \item     sel\_op\_1/2: placement des opérandes (bloc DECODE)
     \item     imm3/5/8: valeurs immédiates (bloc DECODE)
 \end{itemize}
+
+Les instructions ne pouvaient pas être réalisée correctement, car il manque les blocs permettant de les traiter. Ces blocs ont été ajoutés lors des étapes suivantes.
 \subsection{Etape 2}
 L'objectif de cette étape était de réaliser un circuit permettant de traiter les informations mentionnées dans l'étape 1.
 Un bus d'instruction donne les informations nécessaires au fonctionnement du bloc EXECUTE (numéros de registres, type d'opérations à faire, opérandes à utiliser). Le format de ces information est sur 23 bits et se présente comme suit: \medskip \\
