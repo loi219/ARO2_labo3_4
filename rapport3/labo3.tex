@@ -339,7 +339,7 @@ Une simple addition est effecutée entre les opérandes. Tant qu'\textbf{ACTIV} 
     \item     SUB\_OUT: résultat de la soustraction
 \end{itemize}
 \medskip
-Une simple soustraction est effectuée entre les opérandes. Tant qu'\textbf{ACTIV} n'est pas à 1, la sortie sera à 0x0000.
+Une simple soustraction est effectuée entre les opérandes. Tant qu'\textbf{ACTIV} n'est pas à 1, la sortie sera à 0000.
 
 \subsubsection{ALU} \label{alu}
 \begin{figure}[H]
@@ -360,9 +360,31 @@ Une simple soustraction est effectuée entre les opérandes. Tant qu'\textbf{ACT
     \item     OUT\_ALU: résultat de l'opération effectuée dans l'ALU
 \end{itemize}
 \medskip
-Les deux opérandes sont reliées à chaque bloc effectuant les instructions, afin de leur tranmettre les données nécessaires. L'entrée \textbf{sel\_op\_alu} correspond aux bits [3-6] du bus d'instructions, et va, selon sa valeur, permettre de déterminer quelle est l'instruction qui doit être effectuée. Cette valeur (0001 pour ADD, 0x0010 pour SUB et 0011 pour AND) va être testée grâce à des portes NAND reliées aux entrées \textbf{ACTIV} des blocs qui leur correspondent. Le bit 3 pour l'intruction AND n'a pas été utilisé lors de la détection de cette instruction, car l'instruction pour AND est 0011, et l'instruction pour NAND est 0x0111, et il est plus simple de réaliser le AND et le NAND dans un même bloc de comparaison, d'où ce choix.
-En entrée \textbf{op} de \textbf{COMP\_INST} sont sélectionnés les 3 bits de poids faible de \textbf{sel\_op\_alu}, car le bit 3 n'est pas pertinent pour la détermination des opérations AND, OR et XOR effectuées dans ce bloc (il est toujours à 0).
-En sortie de ces trois blocs, se trouvent 3 multiplexers qui vont permettre de choisir la bonne sortie de l'ALU. Le premier MUX (à gauche) prend va renvoyer le résultat d'un ADD ou d'un SUB. À supposer qu'aucune de ces opérations n'aient été effectuées, un second MUX (au centre) va choisir entre la comparaison ou un éventuel ADD/SUB. Un dernier MUX (à droite), va choisir entre une éventuelle opération effectuée, ou, sinon, va renvoyer l'opérande 1 (bypass du bloc). Ce MUX est relié à un bloc de comparaison qui renvoie 1 si le \textbf{sel\_op\_alu} est à 0.
+Les deux opérandes sont reliées à chaque bloc effectuant les instructions, afin de leur tranmettre les données nécessaires. L'entrée \textbf{sel\_op\_alu} correspond aux bits [3-6] du bus d'instructions, et va, selon sa valeur, permettre de déterminer quelle est l'instruction qui doit être effectuée.\\
+\smallbreak
+\begin{tabular}{|c|c|}
+    \hline
+        Opcode & Bloc \\
+        \hline
+        0000   & Bypass (Op1) \\
+        \hline
+        0001   & ADD\\
+        \hline
+        0010   & SUB \\
+        \hline
+        0011   & COMP (AND) \\
+        \hline
+        0100   & COMP (OR) \\
+        \hline
+        0101   & COMP (XOR) \\
+        \hline
+        0110   & COMP (NOT Op1) \\
+         \hline
+        0111   & COMP (AND) \\
+        \hline
+        1000   & Multiplication\\
+        \hline    
+\end{tabular}
 \subsubsection{EXECUTE} \label{execute}
 \begin{figure}[H]
     \centering
