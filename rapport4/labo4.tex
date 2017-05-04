@@ -179,6 +179,56 @@ Effectuer une copie des deux mots écrits en point aux adresses 0x0014 et 0x0016
 Le programme assembleur fourni ne fonctionne pas, car le stack pointer va toujours pointer vers la valeur de la pile qu'il pointait déjà, ainsi le programme se retrouve dans une boule, malgrès l'incrémentation du PC.
 \lstinputlisting[caption=main.S,label=et1a]{../labo4/mains/mainEt2.S}
 \section{Étape 3}
-Modifier le circuit du processeur selon plusieurs conditions
+Ajouter une instruction DISP qui affiche un motif quelconque sur le composant "LED Matrix".
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/DISP_INST.png}
+    \captionof{figure}{Instruction display}
+    \label{fig:disp_inst_pic}
+\end{figure}
+\paragraph{Définition des entrées:}
+\begin{itemize}
+    \item     REG\_DATA: données du registre en entrée
+    \item     INST: instruction
+    \item     clk: horloge
+    \item     CLR: reset
+\end{itemize}
 
+\paragraph{Définition des sorties:}
+\begin{itemize}
+    \item     REG\_ADR: adresse du registre dont les données doivent être sélectionnées
+    \item     Is\_DISP: s'active si l'instruction est un display
+    \item     c0-4: valeur des colonnes sur 8 bits
+\end{itemize}
+\medskip
+Le bloc est aussi composé de 5 registres \textbf{COLU\_x} qui correspondent au 5 colonnes de la matrice LED. Ils renvoient des sorties sur 8 bits, qui, eux, correspondent au nombre de ligne de cette matrice.
+L'instruction \textbf{INST} est divisées en portion de bits qui vont apporter différentes informations. Les bits [2-0] vont permettre de sélectionner l'adresse du registre (dans le Prodis) qui contiendra les données voulues. Les bits [15-8] vont indiquer s'il s'agit bien d'une instruction INST. Pour vérifier leur valeur, un comparateur prend en entrée ces bits, ainsi que la constance 0xdf, et si ces deux sont égaux, alors le comparateur revoie un 1, qui va activer la sortie \textbf{IsDISP}. Cette sortie est également reliée à 5 portes AND, elles-mêmes correspondant aux 5 registres \textbf{COLU\_x}. Chacune de ces portes AND prend en entrée, en plus du \textbf{IsDISP}, un bit différent de l'instruction. En effet, les bits [7-3] de l'instruction permettent de déterminer lequel des regitres [4-0] doit être utilisé. Ainsi, en reliant chacun de ces registres à une porte AND qui prend en entrée le \textbf{IsDISP} et le bit qui lui est attribué, il est possible d'écrire dans un registre bien précis à chaque instruction. Aux sorties [c4-c0], il y aura donc la valeur des 8 points présents dans la colonne sélectionnée.
+\medskip
+\subsection{Chronogramme}
+
+Pour réaliser ce chronogramme, voici les instructions qui ont été effectuées:
+
+\lstinputlisting[caption=main.S,label=et1a]{../labo4/mains/mainEt3.S}
+L'image ci-dessous illustre le résultat des instructions DISP, dans l'ordre dans la matrice led. Cette partie du circuit a été ajoutée dans le Prodis. 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\textwidth]{src/MATRIX_LED_3.png}
+    \captionof{figure}{États de la matrice}
+    \label{fig:matrix_led_3_pic}
+\end{figure}
+\paragraph{Signaux:} toutes les entrées et sorties du bloc, définies plus haut, ont été utilisées pour ce chronogramme.
+
+\paragraph{Code couleur:}
+\begin{itemize}
+    \item     rouge: partie où l'instruction display est activée
+    \item     jaune: premier display
+    \item     violet: deuxième display
+\end{itemize}
+Le premier display implique uniquement la colonne 2, ainsi que le montre le chronogramme, alors que les deuxième implique les colonnes 0, 1, 2 et 4. Cela est vérifiable sur l'image de la LED matrix ci-dessus. Les flèches mettent en évidence le lien entre l'entrée \textbf{REG\_DATA} et la valeur dans les colonnes. Comme la première valeur (pour la colonne 2) est de 0x2a, ce qui correspond à 0b00101010, et que la deuxième valeur (pour les colonnes 0, 1, 2, 4) est de 0x1f, ce qui correspond à 0b00011111, l'image ci-dessus, illustrant l'activation des leds, prouvent le fonctionnement du bloc display.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.8\textwidth]{src/CHRONO_DISP_COL.png}
+    \captionof{figure}{Chronogramme des display}
+    \label{fig:chrono_disp_pic}
+\end{figure}
 \end{document}
