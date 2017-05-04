@@ -152,7 +152,43 @@ Comprendre et démontrer la partie MEMORY ACCESS et le fonctionnement d'une pile
 \subsection{Point a}
 Écrire un programme en assembleur qui effectue une écriture et une lecture de deux mots aux adresses 0x0004 et 0x0006.
 \paragraph{Le fichier ci-dessous} écrit 2 mots aux adresses 0x0004 et 0x0006 et les lit.
+
 \lstinputlisting[caption=main.S,label=et1a]{../labo4/mains/mainEt1a.S}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    LIGNE  & R0     & R1     & R2     & M[adr]\\
+    \hline
+    1      & 0x0012 &        &        &\\
+    \hline
+    2      & 0x0012 &        & 0x0034 &\\
+    \hline
+    3      & 0x0012 & 0x1200 & 0x0034 &\\
+    \hline
+    4      & 0x0012 & 0x1234 & 0x0034 &\\
+    \hline
+    6      & 0x0000 & 0x1234 & 0x0034 &\\
+    \hline
+    7      & 0x0000 & 0x1234 & 0x0034 & 0x1234\\
+    \hline
+    9      & 0x0056 & 0x1234 & 0x0034 &\\
+    \hline
+    10     & 0x0056 & 0x1234 & 0x0078 &\\
+    \hline
+    11     & 0x0056 & 0x5600 & 0x0078 &\\
+    \hline
+    12     & 0x0056 & 0x5678 & 0x0078 &\
+    \hline
+    14     & 0x0004 & 0x5678 & 0x0078 &\\
+    \hline
+    15     & 0x0004 & 0x5678 & 0x5678 &\\
+    \hline
+    17     & 0x0004 & r3   & r1 & \\
+    \hline
+\end{tabular}
+\end{center}
+
 
 \paragraph{Les adresses des mémoires Mem\_High et Mem\_Low} valent 0x0008. Ceci vient de cette l'instruction de la ligne 6 du fichier main.S. Car nous travaillons en 16 bits donc les adresses seront multipliées par 2 au moment de leur traitement.
 Pour cette étape, les valeurs 0x1234 et 0x5678 ont été utilisées pour être insérées dans les mémoires, respectivement aux adresses 0x0004 et 0x0006. Comme Mem\_low doit prendre les bits de poids faible, s'y trouveront les valeurs 0x34 et 0x78. Mem\_high, elle, doit prendre les bits de poids fort, ainsi y seront stockés 0x12 et 0x56.
