@@ -13,50 +13,10 @@
 @
 @----------------------------------------------------------
 
-@TEST ADD
-
-MOV r1,#2
-@--LSL--
-MOV r0,#3
-
-LSL r0,#1
-LSL r0,r1
-
-@--LSR--
-MOV r0,#120
-
-LSR r0,#1
-LSR r0,r1
-
-@--ADD--
-MOV r0,#4
-
-ADD r0,#4
-ADD r0,r1
-
-@--SUB--
-MOV r1,#8
-
-SUB r0,#4
-SUB r0,r1
-
-@--AND--
-MOV r0,#5
-MOV r1,#7
-
-AND r0,r1
-
-@--ORR--
-MOV r0,#3
-MOV r1,#8
-
-ORR r0,r1
-
-@--EOR--
-MOV r0, #3
-MOV r1,#4
-
-@Erreur: EOR r0,r1
-
-@--MVN
-MVN r0,r1
+mov r0, #3
+mov r2, r0
+add r3, r2, #7
+add r5, r3, r0
+and r3, r5
+lsl r1, r5, #2
+sub r0, r3, r1
