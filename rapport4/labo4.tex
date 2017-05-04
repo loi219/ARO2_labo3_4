@@ -80,13 +80,27 @@
     \$zero,\$at,\$v0,\$v1,\$a0,\$a1,\$a2,\$a3,\$t0,\$t1,\$t2,\$t3,\$t4,
     \$t5,\$t6,\$t7,\$s0,\$s1,\$s2,\$s3,\$s4,\$s5,\$s6,\$s7,\$t8,\$t9,%
     \$k0,\$k1,\$gp,\$sp,\$fp,\$ra},
+literate=
+  {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+  {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+  {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+  {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+  {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+  {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+  {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+  {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+  {œ}{{\oe}}1 {Œ}{{\OE}}1 {æ}{{\ae}}1 {Æ}{{\AE}}1 {ß}{{\ss}}1
+  {ű}{{\H{u}}}1 {Ű}{{\H{U}}}1 {ő}{{\H{o}}}1 {Ő}{{\H{O}}}1
+  {ç}{{\c c}}1 {Ç}{{\c C}}1 {ø}{{\o}}1 {å}{{\r a}}1 {Å}{{\r A}}1
+  {€}{{\euro}}1 {£}{{\pounds}}1 {«}{{\guillemotleft}}1
+  {»}{{\guillemotright}}1 {ñ}{{\~n}}1 {Ñ}{{\~N}}1 {¿}{{?`}}1
 }[strings,comments,keywords]
 
 \definecolor{CommentGreen}{rgb}{0,.6,0}
  \lstset{
    language=[mips]Assembler,
    backgroundcolor=\color{backcolour},   
-   escapechar=@, % include LaTeX code between `@' characters
+   escapechar=@ \#, % include LaTeX code between `@' characters
    keepspaces,   % needed to preserve spacing with lstinline
    basicstyle=\footnotesize\ttfamily\bfseries,
    numberstyle=\footnotesize\ttfamily\bfseries,
@@ -138,36 +152,8 @@ Comprendre et démontrer la partie MEMORY ACCESS et le fonctionnement d'une pile
 \subsection{Point a}
 Écrire un programme en assembleur qui effectue une écriture et une lecture de deux mots aux adresses 0x0004 et 0x0006.
 \paragraph{Le fichier ci-dessous} écrit 2 mots aux adresses 0x0004 et 0x0006 et les lit.
-%\begin{lstlisting}[caption=main.S,label=et1]
-%MOV r0, #0x12
-%MOV r2, #4
-%LSL r1, r0, #8
-%ORR r1, r2
-%MOV r3, #4
-%STRH r1, [r3,#0x0004*2]
-%LDRH r1, [r3,#0x0004*2]
-%\end{lstlisting}
 
-\begin{lstlisting}[caption=main.S,label=et1]
-MOV r0, #0x0012
-MOV r2, #0x0034
-LSL r1, r0, #8
-ORR r1,r2
-
-MOV r0,#0x0000
-STRH r1, [r0,#0x4*2]
-
-MOV r0, #0x0056
-MOV r2, #0x0078
-LSL r1, r0, #8
-ORR r1,r2
-
-MOV r0,#0x0004
-STRH r1, [r0,#0x4*2]
-
-LDRH r2, [r0,#0x6*2]
-\end{lstlisting} 
-
+\lstinputlisting[caption=main.S,label=et1a]{../labo4/mains/mainEt1a.S}
 
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
@@ -203,6 +189,7 @@ LDRH r2, [r0,#0x6*2]
 \end{tabular}
 \end{center}
 
+
 \paragraph{Les adresses des mémoires Mem\_High et Mem\_Low} valent 0x0008. Ceci vient de cette l'instruction de la ligne 6 du fichier main.S. Car nous travaillons en 16 bits donc les adresses seront multipliées par 2 au moment de leur traitement.
 Pour cette étape, les valeurs 0x1234 et 0x5678 ont été utilisées pour être insérées dans les mémoires, respectivement aux adresses 0x0004 et 0x0006. Comme Mem\_low doit prendre les bits de poids faible, s'y trouveront les valeurs 0x34 et 0x78. Mem\_high, elle, doit prendre les bits de poids fort, ainsi y seront stockés 0x12 et 0x56.
 
@@ -221,12 +208,10 @@ Le chronogramme ci-dessus illustre le bon fonctionnement du programme assembleur
 
 \subsection{Point b}
 Effectuer une copie des deux mots écrits en point aux adresses 0x0014 et 0x0016 en utilisant uniquement les instructions LDRB et STRB.
+\lstinputlisting[caption=main.S,label=et1a]{../labo4/mains/mainEt1b.S}
 
-\begin{lstlisting}
-
-\end{lstlisting}
 \section{Étape 2}
-Tester un programme assembleur fourni.
+\lstinputlisting[caption=main.S,label=et1a]{../labo4/mains/mainEt2.S}
 \section{Étape 3}
 Modifier le circuit du processeur selon plusieurs conditions
 
